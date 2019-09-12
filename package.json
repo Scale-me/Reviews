@@ -29,6 +29,8 @@
     "jest-config": "^24.9.0",
     "jest-styled-components": "^6.3.3",
     "moment": "^2.24.0",
+    "mongodb": "^3.3.2",
+    "mongoose": "^5.7.0",
     "mysql": "^2.17.1",
     "nodemon": "^1.19.1",
     "parser": "^0.1.4",

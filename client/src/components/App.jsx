@@ -64,6 +64,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      test: '',
       reviews: [],
       overallSummaryObj: {
         numberOfResterauntReviews: 0,
@@ -188,8 +189,19 @@ class App extends React.Component {
     });
   }
 
+  getmongo() {
+    axios.get(`/api/`)
+    .then((response) => {
+      console.log('res',response)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   componentDidMount() {
     this.getReviews();
+    this.getmongo();
   }
 
   render () {

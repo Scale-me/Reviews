@@ -1,29 +1,23 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/reviewsDB', {useNewUrlParser: true, useUnifiedTopology: true });
+const Schema = require('./mongoSchema.js');
+var myDB = 'mongodb://localhost/reviewsDB';
+
+mongoose.connect(myDB, {useNewUrlParser: true, useUnifiedTopology: true });
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-  // we're connected!
-  console.log('mongo connected')
-});
- 
-let RestaurantsSchema = mongoose.Schema({
-  name: String,
 });
 
-let Restaurants = mongoose.model('reviewsDB', RestaurantsSchema);
+var Restaurant = Schema;
 
-let save = (restaurant) => {
-  // TODO: Your code here
-  // This function should save a repo or repos to
-  // the MongoDB
-  let processedRestaurant = new Restaurants(restaurant);
+let save = (name) => {
+  let processedRestaurant = new Restaurant({name: name});
   processedRestaurant.save();
+  console.log('saved!', processedRestaurant)
 }
 
-save({name: 'mcdonald'})
 module.exports = {
   save,
-  Restaurants
+  Restaurant
 }
