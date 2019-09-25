@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const db = require('../database/index.js');
 const path = require('path');
 const compression = require('compression');
-const { getAllReviews, getReview, postReview, updateReview, deleteReview } = require('../database/mongo/index.js');
+const { getAllReviews, getReview, postReview, updateReview, deleteReview } = require('../database/db/controller.js');
 const PORT = 3003;
 
 app.use(express.static(path.join(__dirname,  '../public')));
