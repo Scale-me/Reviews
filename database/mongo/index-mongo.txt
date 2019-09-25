@@ -1,0 +1,1 @@
+db.reviews.createIndex( { restaurant_id: 1 } )

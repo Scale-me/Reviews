@@ -1,0 +1,8 @@
+use reviewsDB
+
+
+db.reviews.count()
+
+db.users.count()
+
+db.restaurants.count()

@@ -39,23 +39,57 @@ npm install
 
 ## RESTful CRUD API
 GET: 
-app.get
-"/api/:restaurantName/reviews/"
+"/api/restaurant/:restaurantName/review/:reviewid"
+Example response data: { {
+  id ,
+  review , 
+  overall ,
+  food,
+  service,
+  ambience,
+  value,
+  noise,
+  would_recommend,
+  date: Date, 
+  restaurant_id,
+  user_id,
+  user,
+  user_initials,
+  initials_background,
+  location,
+  vip,
+  total_reviews
+} }
 
-Input/parameters: { reviews_id }
 
 POST:
-"/api/:restaurantName/reviews"
-
+"/api/restaurant/:restaurantName/review/:reviews_id"
+Example response data: { reviews_id }
 
 PUT: 
 "/api/reviews/:restaurantName"
-
+Example response data: { reviews_id }
 
 DELETE:
 "/api/reviews/:restaurantName"
+Example response data: { 202 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 CREATE/POST:
+Example response data: 
 Input: { reviews_id }
 
 READ/GET:
@@ -66,3 +100,4 @@ Input: { reviews_id, user_id, restaurant_id, review, overall, food, service, amb
 
 DELETE/DELETE: 
 Input: { reviews_id, }
+

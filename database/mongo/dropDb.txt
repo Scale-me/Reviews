@@ -1,0 +1,5 @@
+mongo 
+
+use reviewsDB;
+
+db.dropDatabase();

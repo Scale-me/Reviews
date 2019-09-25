@@ -8,6 +8,7 @@ import BrandonTextMedium from '../../../public/Fonts/BrandonText-Medium.otf';
 import BrandonTextBold from '../../../public/Fonts/BrandonText-Bold.otf';
 import ReactPaginate from 'react-paginate';
 
+
 const GlobalStyle = styled.createGlobalStyle`
   html {
     @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
@@ -64,7 +65,8 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      test: '',
+      mongo: [],
+      postgres: [],
       reviews: [],
       overallSummaryObj: {
         numberOfResterauntReviews: 0,
@@ -82,7 +84,9 @@ class App extends React.Component {
         overallTwoPercentage: 0,
         overallOnePercentage: 0
       }
-    }
+    } 
+    this.getAllReviews = this.getAllReviews.bind(this);
+    this.getAllReviewsPG = this.getAllReviewsPG.bind(this);
 
     this.filterReviews = this.filterReviews.bind(this);
   }
@@ -126,8 +130,8 @@ class App extends React.Component {
       } else if (review.overall === 1) {
         overallOne++;
       }
-      if (!userReviews.includes(review.user)) {
-        userReviews.push(review.user);
+      if (!userReviews.includes(review.user_name)) {
+        userReviews.push(review.user_name);
       }
       if (review.noise === 'Quiet') {
         noiseQuiet++;
@@ -176,10 +180,11 @@ class App extends React.Component {
       path = 'L1';
     }
 
+    axios.get(`http://18.223.151.81:3003/api/${path}/reviews`)
+    // axios.get(`/api/${path}/reviews`)
     // axios.get(`http://18.223.151.81:3003/api/${path}/reviews`)
-    axios.get(`http://localhost:3003/api/${path}/reviews`)
     .then((response) => {
-      // console.log('response: ', response.data);
+      console.log('response: ', response.data);
       this.setState({
         reviews: response.data
       }, this.filterReviews)
@@ -189,8 +194,8 @@ class App extends React.Component {
     });
   }
 
-  getmongo() {
-    axios.get(`/api/`)
+  getUsers() {
+    axios.get(`/api/users`)
     .then((response) => {
       console.log('res',response)
     })
@@ -199,9 +204,38 @@ class App extends React.Component {
     });
   }
 
+  getAllReviews(restaurant_id) {
+    axios.get(`http://localhost:3003/api/restaurant/${restaurant_id}/reviews`)
+    .then(reviews => {
+      console.log('mongo',reviews.data)
+      this.setState({reviews: reviews.data}, this.filterReviews)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  getAllReviewsPG(restaurant_id) {
+    axios.get(`http://localhost:3003/postgres/restaurant/${restaurant_id}/reviews`)
+    .then(reviews => {
+      console.log('postgres',reviews)
+      this.setState({postgres: reviews.data}, this.filterReviews)
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  getRandomNum(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
   componentDidMount() {
-    this.getReviews();
-    this.getmongo();
+    // this.getReviews();
+    this.getAllReviews(this.getRandomNum(0,100));
+    // this.getAllReviewsPG(10);
   }
 
   render () {
@@ -215,18 +249,18 @@ class App extends React.Component {
           <ReviewList reviews={this.state.reviews} />
           <ReviewPageDiv>
           <ReactPaginate
-          previousLabel={'previous'}
-          nextLabel={'next'}
-          breakLabel={'...'}
-          breakClassName={'break-me'}
-          pageCount={this.state.pageCount}
-          marginPagesDisplayed={1}
-          pageRangeDisplayed={3}
-          onPageChange={this.handlePageClick}
-          containerClassName={'pagination'}
-          subContainerClassName={'pages pagination'}
-          activeClassName={'active'}
-        />
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={1}
+            pageRangeDisplayed={3}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
          </ReviewPageDiv>
         </div>
         }

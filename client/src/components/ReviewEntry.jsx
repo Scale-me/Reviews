@@ -250,7 +250,7 @@ class ReviewEntry extends React.Component {
             (<div>
               <InitialsCircle>{this.props.review.user_initials}</InitialsCircle>
             </div>)}
-            <Username>{this.props.review.user}</Username>
+            <Username>{this.props.review.user_name}</Username>
             <UserLocation>{this.props.review.location}</UserLocation>
             <Username>
               <span><img src={textbox} alt="textbox icon"/></span>
