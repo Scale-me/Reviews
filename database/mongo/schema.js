@@ -6,7 +6,7 @@ var UserSchema = new Schema({
   _id: Number,
   username: String,
   user_initials: String,
-  user_initials_background: String,
+  user_initials_background: String,np
   user_location: String,
   user_vip: Boolean,
   user_total_reviews: Number

@@ -194,32 +194,12 @@ class App extends React.Component {
     });
   }
 
-  getUsers() {
-    axios.get(`/api/users`)
-    .then((response) => {
-      console.log('res',response)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
 
   getAllReviews(restaurant_id) {
-    axios.get(`http://localhost:3003/api/restaurant/${restaurant_id}/reviews`)
+    axios.get(`http://18.216.137.141/api/restaurant/${restaurant_id}/reviews`)
     .then(reviews => {
       console.log('mongo',reviews.data)
       this.setState({reviews: reviews.data}, this.filterReviews)
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
-  }
-
-  getAllReviewsPG(restaurant_id) {
-    axios.get(`http://localhost:3003/postgres/restaurant/${restaurant_id}/reviews`)
-    .then(reviews => {
-      console.log('postgres',reviews)
-      this.setState({postgres: reviews.data}, this.filterReviews)
     })
     .catch(function (error) {
       console.log(error);
@@ -270,5 +250,4 @@ class App extends React.Component {
   }
 }
 
-// ReactDOM.render(<App />, document.getElementById('app'));
 export default App;

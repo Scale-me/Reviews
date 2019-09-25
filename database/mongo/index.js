@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const {Review, Restaurant, User} = require('./schema');
+const {Review} = require('./schema');
 var myDB = 'mongodb://localhost/reviewsDB';
 
 mongoose.connect(myDB, {useNewUrlParser: true, useUnifiedTopology: true });
@@ -8,9 +8,10 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
 });
 
+mongoose.connect("mongodb://username:password@ec2-18-220-240-199.us-east-2.compute.amazonaws.com:27017/reviewsDB", {useNewUrlParser: true, useUnifiedTopology: true })
+
 exports.getAllReviews = (req, res) => {
   var { restaurant_id } = req.params
-  console.log({ restaurant_id })
   Review.find({ restaurant_id })
   .then(data => {
     res.send(data)
@@ -23,7 +24,6 @@ exports.getAllReviews = (req, res) => {
 
 exports.getReview = (req, res) => {
   var { _id } = req.params
-  console.log(_id)
   Review.find({_id})
   .then(data => {
     res.send(data)
@@ -33,6 +33,12 @@ exports.getReview = (req, res) => {
     console.log(err)
   })
 }
+
+db.createUser({
+  user: 'reviews',
+  pwd: 'reviews',
+  roles: [{ role: 'readWrite', db:'reviewsDB'}]
+})
 
 exports.postReview = (req, res) => {
   var { restaurant_id } = req.params
@@ -100,64 +106,3 @@ exports.deleteReview = (req, res) => {
     console.log(err)
   })
 }
-
-////////////////////////////////////////
-/////////////RESTAURANTS////////////////
-////////////////////////////////////////
-
-// exports.getAllReviews = (req, res) => {
-//   var { _id } = req.params
-//   Restaurant.find({_id})
-//   .then(data => {
-//     var thing = JSON.parse(data[0].reviews[0])
-//     res.send(thing)
-//     console.log(`Successful get all reviews for id: ${_id}`)
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
-// }
-
-// exports.getReview = (req, res) => {
-//   var { _id } = req.params
-//   Restaurant.find({ _id})
-//   .then(data => {
-//     res.send(data)
-//     console.log(`Successful get review for id: ${_id}`)
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
-// }
-
-// exports.postReview = (req, res) => {
-//   const newReview = new Review ({});
-//   newReview.save()
-//   .then(data => {
-//     res.send(data.id)
-//     // res.sendStatus(201)
-//   })
-//   .catch(err => {
-//     console.log(err)
-//   })
-// }
-
-// exports.updateReview = (req, res) => {
-//   Restaurant.updateOne({_id:1}, {$set: changes}, {new:true})
-//   .then((data) => {
-//     res.send(data.id)
-//   })
-//   .catch((err) => {
-//     console.log(err)
-//   })
-// }
-
-// exports.deleteReview = (req, res) => {
-//   Restaurant.deleteOne(req.body, (err, data) => {
-//     if (err) {
-//       console.log(err)
-//     } else {
-//       res.sendStatus(204);
-//     }
-//   });
-// }
