@@ -1,6 +1,6 @@
 # Project Name
 
-> Project description
+Restaurant Reservation Application - Reviews Micro-Service
 
 ## Related Projects
 
